@@ -10,15 +10,10 @@ use Validator;
 class PollsController extends Controller
 {
     public function index() {
-        return response()->json(Poll::paginate(1), 200);
+        return response()->json(Poll::paginate(20), 200);
     }
 
     public function show($id) {
-        // return response()->json(Poll::find($id), 200);
-        /*$poll = Poll::find($id);
-        if (is_null($poll)) {
-            return response()->json(null, 404);
-        }*/
         $poll = Poll::with('questions')->findOrFail($id);
         $response['poll'] = $poll;
         $response['questions'] = $poll->questions;
